@@ -1,9 +1,11 @@
 import socket
 import threading
+import pickle
 def read_sok():
     while 1 :
         data = sor.recv(1024)
-        print(data.decode('utf-8'))
+        mass = pickle.loads(data)
+        print(mass[1])
 server = "localhost", 5050  # Данные сервера
 alias = input() # Вводим наш псевдоним
 sor = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
