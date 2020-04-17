@@ -1,49 +1,78 @@
 import socket
-import persone
+# import persone
 import pickle, random
+import heroes
 
-class Heroes(object):
-    def __init__(self, level, dam, deff, item):
-        self.level = level
-        self.dam = dam
-        self.deff = deff
-        self.item = item
-        self.xy = self.coordinat()
+def Move(moveNext, cikl, sock, clients):
 
-    def levelheroes(self):
-        return [self.level, self.dam, self.deff, self.item]
+    if moveNext == 'открыть дверь':
+        print(moveNext)
+        sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
+        cikl = hod(cikl)
+    elif moveNext == 'герой':
+        Heroes()
+    else:
+        sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
+        return cikl
 
-    def coordinat(self):
-        coord = {'x': random.randint(0, 9), 'y': random.randint(0, 9)}
-        return coord
+    return cikl
+
+def vozmHod(Position):
+    pyt = ''
+    if Position % 5 != 0:
+        pyt = pyt + "Влево "
+    if (Position + 1) % 5 != 0:
+        pyt = pyt + "Вправо "
+    if Position not in range(20, 25):
+        pyt = pyt + "Вниз "
+    if Position not in range(0, 5):
+        pyt = pyt + "Вверх "
+
+    return pyt
+
+def hod(cikl):
+    i = input().lower()
+    if i == "вверх":
+        cikl = cikl - 5
+    elif i == "вниз":
+        cikl = cikl + 5
+    elif i == "влево":
+        cikl = cikl - 1
+    elif i == "вправо":
+        cikl = cikl + 1
+    else:
+        print("Ой, туда я не хочу идти")
+    return cikl
 
 
 def Map():
     x = 0
     OsX = []
-    while x<=10:
+    while x <= 25:
         OsX.append(x)
         x += 1
     return OsX
 
 Maps = Map()
-print(Maps)
-
-level = Heroes(1, 4, 5, 0)
-
+level = heroes.Hero(1, 4, 5, 0)
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
 
 sock.bind(('localhost', 5050))
 client = [] # Массив где храним адреса клиентов
 print('Start Server')
 while 1:
     data, addres = sock.recvfrom(1024)
+    print(type(data.decode('utf-8')))
     print(addres[0], addres[1])
-    if addres not in client:
-        client.append(addres) # Если такова клиента нету , то добавить
-    for clients in client:
+    print(data.decode('utf-8'))
+    otvet = Move(str(data.decode('utf-8')), 1, sock, addres)
+    # if addres not in client:
+    #     client.append(addres) # Если такова клиента нету , то добавить
+    # for clients in client:
+    #     break
         # if clients == addres:
         #     continue # Не отправлять данные клиенту который их прислал
-        sock.sendto(pickle.dumps(level.levelheroes()), clients)
+        # sock.sendto(pickle.dumps(level), clients)
+        # print(otvet)
+        # sock.sendto(pickle.dumps(str(otvet)), clients)
