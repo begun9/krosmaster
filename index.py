@@ -7,12 +7,13 @@ def Move(moveNext, cikl, sock, clients):
 
     if moveNext == 'открыть дверь':
         print(moveNext)
-        sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
+        # sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
+
         cikl = hod(cikl)
     elif moveNext == 'герой':
         Heroes()
     else:
-        sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
+        sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
         return cikl
 
     return cikl
@@ -53,9 +54,14 @@ def Map():
         x += 1
     return OsX
 
-Maps = Map()
-level = heroes.Hero(1, 4, 5, 0)
+def marshrut(napravlenie):
+    if napravlenie[0].lower() == 'name':
+        level = heroes.Hero(napravlenie[1])
+        return ['name', level]
+    elif napravlenie[0].lower() == 'open':
+        door = Move(napravlenie[1], 1, sock, addres)
 
+Maps = Map()
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 sock.bind(('localhost', 5050))
@@ -63,10 +69,13 @@ client = [] # Массив где храним адреса клиентов
 print('Start Server')
 while 1:
     data, addres = sock.recvfrom(1024)
-    print(type(data.decode('utf-8')))
-    print(addres[0], addres[1])
-    print(data.decode('utf-8'))
-    otvet = Move(str(data.decode('utf-8')), 1, sock, addres)
+    vhod = pickle.loads(data)
+    sock.sendto(pickle.dumps(marshrut(vhod)), addres)
+
+
+
+    # otvet = Move(str(pickle.loads(data)[1]), 1, sock, addres)
+
     # if addres not in client:
     #     client.append(addres) # Если такова клиента нету , то добавить
     # for clients in client:

@@ -1,14 +1,16 @@
 import random
 class Hero(object):
-    def __init__(self, level, dam, deff, item):
-        self.level = level
-        self.dam = dam
-        self.deff = deff
-        self.item = item
+    def __init__(self, name):
+        self.level = 1
+        self.dam = random.randint(2, 5)
+        self.deff = random.randint(2, 5)
+        self.item = 0
+        self.name = name
         self.xy = self.coordinat()
+        self.position = "start"
 
     def levelheroes(self):
-        return [self.level, self.dam, self.deff, self.item]
+        return [self.name, self.level, self.dam, self.deff, self.item]
 
     def coordinat(self):
         # coord = {'x': random.randint(0, 9), 'y': random.randint(0, 9)}
@@ -17,14 +19,16 @@ class Hero(object):
 
 def Move(moveNext, cikl):
     if moveNext == 'открыть дверь':
-        vozmHod(cikl)
-        cikl = hod(cikl)
+        print(moveNext)
+        sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
 
-        # level1()
+        cikl = hod(cikl)
     elif moveNext == 'герой':
         Heroes()
     else:
-        return
+        sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
+        return cikl
+
     return cikl
 
 def vozmHod(Position):
@@ -58,6 +62,9 @@ def hod(cikl):
         print("Ой, туда я не хочу идти")
 
     return cikl
+
+# def pos(mesto):
+#     if mesto = 'strat':
 
 # x = Hero(1,2,3,4)
 # print(x.xy['x'])
