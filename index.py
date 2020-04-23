@@ -3,13 +3,14 @@ import socket
 import pickle, random
 import heroes
 
+poolheroes = {}
 def Move(moveNext, cikl, sock, clients):
 
     if moveNext == 'открыть дверь':
         print(moveNext)
         # sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
+        return heroes.vozmHod(cikl)
 
-        cikl = hod(cikl)
     elif moveNext == 'герой':
         Heroes()
     else:
@@ -17,34 +18,6 @@ def Move(moveNext, cikl, sock, clients):
         return cikl
 
     return cikl
-
-def vozmHod(Position):
-    pyt = ''
-    if Position % 5 != 0:
-        pyt = pyt + "Влево "
-    if (Position + 1) % 5 != 0:
-        pyt = pyt + "Вправо "
-    if Position not in range(20, 25):
-        pyt = pyt + "Вниз "
-    if Position not in range(0, 5):
-        pyt = pyt + "Вверх "
-
-    return pyt
-
-def hod(cikl):
-    i = input().lower()
-    if i == "вверх":
-        cikl = cikl - 5
-    elif i == "вниз":
-        cikl = cikl + 5
-    elif i == "влево":
-        cikl = cikl - 1
-    elif i == "вправо":
-        cikl = cikl + 1
-    else:
-        print("Ой, туда я не хочу идти")
-    return cikl
-
 
 def Map():
     x = 0
@@ -55,11 +28,22 @@ def Map():
     return OsX
 
 def marshrut(napravlenie):
-    if napravlenie[0].lower() == 'name':
+    if napravlenie[0] == 'name':
         level = heroes.Hero(napravlenie[1])
+        global poolheroes
+        poolheroes.update({level.name: level})
         return ['name', level]
-    elif napravlenie[0].lower() == 'open':
+    elif napravlenie[0] == 'open':
         door = Move(napravlenie[1], 1, sock, addres)
+        print(door)
+        return ['open', door]
+    elif napravlenie[0] == 'heroes':
+        hero = poolheroes[napravlenie[2]]
+        return ['heroes', hero]
+    elif napravlenie[0] = 'move':
+        move = heroes.hod(napravlenie[1])
+        return move
+
 
 Maps = Map()
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

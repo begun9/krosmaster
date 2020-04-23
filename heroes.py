@@ -46,10 +46,10 @@ def vozmHod(Position):
         pyt = pyt + "Вверх "
         # print("Вверх")
 
-    print(pyt)
+    return pyt
 
-def hod(cikl):
-    i = input().lower()
+def hod(cikl, move):
+    i = move
     if i == "вверх":
         cikl = cikl - 5
     elif i == "вниз":
@@ -62,13 +62,3 @@ def hod(cikl):
         print("Ой, туда я не хочу идти")
 
     return cikl
-
-# def pos(mesto):
-#     if mesto = 'strat':
-
-# x = Hero(1,2,3,4)
-# print(x.xy['x'])
-# rez = Move(str(input()), x.xy['x'])
-# x.xy['x'] = rez
-# print(rez)
-# print(x.xy['x'])
