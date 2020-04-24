@@ -42,6 +42,7 @@ def marshrut(napravlenie):
         return ['heroes', hero]
     elif napravlenie[0] = 'move':
         move = heroes.hod(napravlenie[1])
+
         return move
 
 
