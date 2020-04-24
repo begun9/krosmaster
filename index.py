@@ -4,6 +4,7 @@ import pickle, random
 import heroes
 
 poolheroes = {}
+# Обработка маршрута
 def Move(moveNext, cikl, sock, clients):
 
     if moveNext == 'открыть дверь':
@@ -40,7 +41,7 @@ def marshrut(napravlenie):
     elif napravlenie[0] == 'heroes':
         hero = poolheroes[napravlenie[2]]
         return ['heroes', hero]
-    elif napravlenie[0] = 'move':
+    elif napravlenie[0] == 'move':
         move = heroes.hod(napravlenie[1])
 
         return move
