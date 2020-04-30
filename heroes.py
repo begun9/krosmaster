@@ -1,4 +1,5 @@
 import random
+import pickle
 class Hero(object):
     def __init__(self, name):
         self.level = 1
@@ -17,14 +18,17 @@ class Hero(object):
         coord = {'x': random.randint(0, 25)}
         return coord
 
-def Move(moveNext, cikl):
+def Move(moveNext, cikl, sock, clients):
     if moveNext == 'открыть дверь':
-        print(moveNext)
-        sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
+        # print(moveNext)
+        # sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
+        return vozmHod(cikl)
 
-        cikl = hod(cikl)
+        # cikl = hod(cikl)
     elif moveNext == 'герой':
         Heroes()
+    elif moveNext == 'наверх' or moveNext == 'вниз' or moveNext == 'налево' or moveNext == 'направо':
+        hod()
     else:
         sock.sendto(pickle.dumps(vozmHod(cikl)), clients)
         return cikl
@@ -34,10 +38,10 @@ def Move(moveNext, cikl):
 def vozmHod(Position):
     pyt = ''
     if Position % 5 != 0:
-        pyt = pyt + "Влево "
+        pyt = pyt + "Налево "
         # print("Влево")
     if (Position + 1) % 5 != 0:
-        pyt = pyt + "Вправо "
+        pyt = pyt + "Направо "
         # print("Вправо")
     if Position not in range(20, 25):
         pyt = pyt + "Вниз "
@@ -50,14 +54,15 @@ def vozmHod(Position):
 
 def hod(cikl, move):
     i = move
+    ciklDvigenia = cikl.xy['x']
     if i == "вверх":
-        cikl = cikl - 5
+        cikl.xy['x'] = ciklDvigenia - 5
     elif i == "вниз":
-        cikl = cikl + 5
-    elif i == "влево":
-        cikl = cikl - 1
-    elif i == "вправо":
-        cikl = cikl + 1
+        cikl.xy['x'] = ciklDvigenia + 5
+    elif i == "налево":
+        cikl.xy['x'] = ciklDvigenia - 1
+    elif i == "направо":
+        cikl.xy['x'] = ciklDvigenia + 1
     else:
         print("Ой, туда я не хочу идти")
 

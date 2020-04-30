@@ -2,23 +2,27 @@ import socket
 # import persone
 import pickle, random
 import heroes
+from heroes import Hero
 
 poolheroes = {}
 # Обработка маршрута
-def Move(moveNext, cikl, sock, clients):
-
-    if moveNext == 'открыть дверь':
-        print(moveNext)
-        # sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
-        return heroes.vozmHod(cikl)
-
-    elif moveNext == 'герой':
-        Heroes()
-    else:
-        sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
-        return cikl
-
-    return cikl
+# def Move(moveNext, cikl, sock, clients):
+#
+#     if moveNext == 'открыть дверь':
+#         print(moveNext)
+#         # sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
+#         return heroes.vozmHod(cikl)
+#
+#     elif moveNext == 'герой':
+#         Heroes()
+#     elif moveNext =='наверх'  or moveNext =='вниз' or moveNext =='налево' or moveNext =='направо':
+#         heroes.Move()
+#
+#     else:
+#         sock.sendto(pickle.dumps(heroes.vozmHod(cikl)), clients)
+#         return cikl
+#
+#     return cikl
 
 def Map():
     x = 0
@@ -28,23 +32,21 @@ def Map():
         x += 1
     return OsX
 
-def marshrut(napravlenie):
+def marshrut(napravlenie):# 1) вид операции из словаря, 2) Введенное слово пользователем. 3) Имя регистрации клиента
+    global poolheroes
     if napravlenie[0] == 'name':
-        level = heroes.Hero(napravlenie[1])
-        global poolheroes
-        poolheroes.update({level.name: level})
+        # level = heroes.Hero(napravlenie[1])
+        poolheroes.update({level.name: heroes.Hero(napravlenie[1])})
         return ['name', level]
     elif napravlenie[0] == 'open':
-        door = Move(napravlenie[1], 1, sock, addres)
-        print(door)
-        return ['open', door]
+        return ['open', heroes.Move(napravlenie[1], poolheroes[], sock, addres)]
     elif napravlenie[0] == 'heroes':
-        hero = poolheroes[napravlenie[2]]
-        return ['heroes', hero]
+        # hero = poolheroes[napravlenie[2]]
+        return ['heroes', poolheroes[napravlenie[2]]]
     elif napravlenie[0] == 'move':
-        move = heroes.hod(napravlenie[1])
-
-        return move
+        # move = heroes.hod(poolheroes[napravlenie[2]],  napravlenie[1]) #1) класс клиента из пула, 2)
+        poolheroes[napravlenie[2]] = heroes.hod(poolheroes[napravlenie[2]],  napravlenie[1])
+        return ['move', poolheroes[napravlenie[2]]]
 
 
 Maps = Map()
