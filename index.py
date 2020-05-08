@@ -35,13 +35,12 @@ def Map():
 def marshrut(napravlenie):# 1) вид операции из словаря, 2) Введенное слово пользователем. 3) Имя регистрации клиента
     global poolheroes
     if napravlenie[0] == 'name':
-        # level = heroes.Hero(napravlenie[1])
+        level = heroes.Hero(napravlenie[1])
         poolheroes.update({level.name: heroes.Hero(napravlenie[1])})
         return ['name', level]
     elif napravlenie[0] == 'open':
-        return ['open', heroes.Move(napravlenie[1], poolheroes[], sock, addres)]
+        return ['open', heroes.Move(napravlenie[1], poolheroes[napravlenie[2]].xy['x'], sock, addres)]
     elif napravlenie[0] == 'heroes':
-        # hero = poolheroes[napravlenie[2]]
         return ['heroes', poolheroes[napravlenie[2]]]
     elif napravlenie[0] == 'move':
         # move = heroes.hod(poolheroes[napravlenie[2]],  napravlenie[1]) #1) класс клиента из пула, 2)

@@ -25,6 +25,7 @@ def slovar(fraza):
         'вниз': 'move',
         'налево': 'move',
         'направо': 'move',
+        'бой': 'fite',
 
     }
     return nabor[fraza]

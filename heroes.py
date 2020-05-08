@@ -4,7 +4,8 @@ class Hero(object):
     def __init__(self, name):
         self.level = 1
         self.dam = random.randint(2, 5)
-        self.deff = random.randint(2, 5)
+        self.deff = random.randint(1, 4)
+        self.lovk = random.randint(1, 4)
         self.item = 0
         self.name = name
         self.xy = self.coordinat()
