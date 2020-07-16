@@ -24,6 +24,7 @@ poolheroes = {}
 #
 #     return cikl
 
+# Размер карты
 def Map():
     x = 0
     OsX = []
@@ -32,6 +33,7 @@ def Map():
         x += 1
     return OsX
 
+# Обработка входящих параметров
 def marshrut(napravlenie):# 1) вид операции из словаря, 2) Введенное слово пользователем. 3) Имя регистрации клиента
     global poolheroes
     if napravlenie[0] == 'name':

@@ -19,6 +19,7 @@ class Hero(object):
         coord = {'x': random.randint(0, 25)}
         return coord
 
+# Варианты хода
 def Move(moveNext, cikl, sock, clients):
     if moveNext == 'открыть дверь':
         # print(moveNext)
@@ -36,6 +37,8 @@ def Move(moveNext, cikl, sock, clients):
 
     return cikl
 
+
+# Возможные ходы
 def vozmHod(Position):
     pyt = ''
     if Position % 5 != 0:
@@ -53,6 +56,7 @@ def vozmHod(Position):
 
     return pyt
 
+# Смещение
 def hod(cikl, move):
     i = move
     ciklDvigenia = cikl.xy['x']

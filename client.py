@@ -14,7 +14,7 @@ def printHeroes(heroes):
     print('Сила: ' + str(heroes.dam))
     print('Защита: ' + str(heroes.deff))
     print('За пазухой: ' + str(heroes.item))
-    print('За пазухой: ' + str(heroes.xy))
+    print('Координаты: ' + str(heroes.xy))
     print('**********')
 
 def slovar(fraza):
